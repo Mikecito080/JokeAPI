@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JokeApp</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="icon.png" />
+</head>
+<body>
+  <div id="splash">
+    <h1>Bienvenido a JokeApp 😂</h1>
+  </div>
+
+  <nav class="bottom-nav">
+    <button data-tab="inicio">🏠</button>
+    <button data-tab="buscar">🔍</button>
+    <button data-tab="favoritos">⭐</button>
+    <button data-tab="registro">👤</button>
+    <button data-tab="categorias">📂</button>
+    <button data-tab="acerca">ℹ️</button>
+  </nav>
+  
+
+  <main>
+    <!-- 1. Inicio -->
+    <section id="inicio" class="tab active">
+      <h2>Chiste del Día</h2>
+      <div id="chiste-aleatorio"></div>
+      <button onclick="obtenerChiste()">Otro chiste</button>
+    </section>
+
+    <!-- 2. Buscar -->
+    <section id="buscar" class="tab">
+      <h2>Buscar chistes</h2>
+      <input type="text" id="buscarInput" placeholder="Palabra clave..." />
+      <select id="filtroCategoria">
+        <option value="">Todas</option>
+        <option value="Programming">Programming</option>
+        <option value="Misc">Misc</option>
+        <option value="Dark">Dark</option>
+        <option value="Pun">Pun</option>
+      </select>
+      <button onclick="buscarChistes()">Buscar</button>
+      <div id="resultado-busqueda"></div>
+    </section>
+
+    <!-- 3. Favoritos -->
+    <section id="favoritos" class="tab">
+      <h2>Favoritos</h2>
+      <div id="lista-favoritos"></div>
+    </section>
+
+    <!-- 4. Registro -->
+    <section id="registro" class="tab">
+      <h2>Registro</h2>
+      <form id="form-registro">
+        <input type="text" placeholder="Nombre" required />
+        <input type="email" placeholder="Email" required />
+        <input type="number" placeholder="Edad" required />
+        <input type="password" placeholder="Contraseña" required />
+        <input type="text" placeholder="País" required />
+        <select required>
+          <option value="">Género</option>
+          <option>Masculino</option>
+          <option>Femenino</option>
+          <option>Otro</option>
+        </select>
+        <input type="text" placeholder="Chiste Favorito" />
+        <button type="submit">Registrarse</button>
+      </form>
+    </section>
+    <!-- 5. Categorías -->
+<!-- 5. Categorías -->
+<section id="categorias" class="tab">
+    <h2>Categorías</h2>
+    <p>Explora chistes por categoría:</p>
+    <ul>
+      <li><button onclick="buscarPorCategoria('Programming')">👨‍💻 Programación</button></li>
+      <li><button onclick="buscarPorCategoria('Misc')">🌀 Misceláneos</button></li>
+      <li><button onclick="buscarPorCategoria('Dark')">🌑 Humor negro</button></li>
+      <li><button onclick="buscarPorCategoria('Pun')">😂 Juegos de palabras</button></li>
+      <li><button onclick="buscarPorCategoria('Spooky')">👻 Terror</button></li>
+      <li><button onclick="buscarPorCategoria('Christmas')">🎄 Navidad</button></li>
+    </ul>
+    <div id="chistes-categoria"></div>
+  </section>
+  
+  
+  <!-- 6. Acerca de -->
+  <section id="acerca" class="tab">
+    <h2>Acerca de</h2>
+    <p>JokeApp es una app para disfrutar de los mejores chistes de internet usando la <a href="https://jokeapi.dev/" target="_blank">JokeAPI</a>.</p>
+    <p>Creada como proyecto educativo con ❤️</p>
+  </section>
+  
+  </main>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+  <!-- Scripts -->
+  <script src="firebase.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>

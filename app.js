@@ -10,6 +10,9 @@ window.addEventListener("DOMContentLoaded", () => {
   
     obtenerChiste();
     cargarFavoritos();
+
+    generarDuelo();
+
   });
   
   function obtenerChiste() {
@@ -19,7 +22,42 @@ window.addEventListener("DOMContentLoaded", () => {
         document.getElementById("chiste-aleatorio").innerHTML = mostrarChiste(data, true);
       });
   }
+  function generarDuelo() {
+    const contenedor = document.getElementById("duelo-chistes");
+    contenedor.innerHTML = "Cargando duelo...";
   
+    Promise.all([
+      fetch("https://v2.jokeapi.dev/joke/Any?lang=es").then(res => res.json()),
+      fetch("https://v2.jokeapi.dev/joke/Any?lang=es").then(res => res.json())
+    ]).then(([c1, c2]) => {
+      contenedor.innerHTML = `
+        <div class="duelo">
+          <div class="chiste-box">
+            ${mostrarChiste(c1)}
+            <button onclick="votarChiste('votos1')">Votar por este</button>
+          </div>
+          <div class="chiste-box">
+            ${mostrarChiste(c2)}
+            <button onclick="votarChiste('votos2')">Votar por este</button>
+          </div>
+        </div>
+        <div class="resultados">
+          🏆 Chiste 1: <span id="votos1">${localStorage.getItem("votos1") || 0}</span> votos |
+          🏆 Chiste 2: <span id="votos2">${localStorage.getItem("votos2") || 0}</span> votos
+        </div>
+        <button onclick="generarDuelo()">Nuevo duelo</button>
+      `;
+    });
+  }
+  function votarChiste(clave) {
+    let votos = parseInt(localStorage.getItem(clave) || 0);
+    votos++;
+    localStorage.setItem(clave, votos);
+    document.getElementById(clave).textContent = votos;
+    alert("¡Tu voto fue contado! 🙌");
+  }
+  
+
   function buscarChistes() {
     const query = document.getElementById("buscarInput").value;
     const categoria = document.getElementById("filtroCategoria").value;
